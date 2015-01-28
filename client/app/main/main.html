@@ -1,0 +1,90 @@
+<header class="hero-unit" id="banner">
+  <div class="container">
+  <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12">
+      <h1> Human Resource Management </h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <form class="form1" id="form1">
+    <div class="row" ng-if="message">
+      <div class="alert alert-danger">
+        <strong>Error!</strong> {{message}}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-8 col-md-offset-2">
+        <label for="select"></label>
+        <select autofocus="autofocus" required="required" ng-model="employee"  name="employee" id="employee" ng-value="employee" ng-options="e as e.label for e in options" class="form-control">
+          <option value=''>- Select Employee Name -</option>
+        </select>
+      </div>
+    </div> <br/>
+
+    <div class="row">
+      <div class="col-xs-6 col-sm-3 col-md-4 col-md-offset-4">
+      <button type="button" class="btn btn-primary btn-lg" ng-click="add(employee)"> Initiate Joining </button> 
+      </div>
+    </div> <br/>
+    
+    <div class="row">
+      <div class="col-xs-6 col-sm-3 col-md-4 col-md-offset-4"> 
+      <button type="button" class="btn btn-primary btn-lg" ng-click="relieve(employee)"> Initiate Relieving </button>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 col-md-8 col-md-offset-2" style="overflow:hidden; padding:3em 0;">
+      <div class="form-group">
+        <div class="input-group input-group-md">
+          <input type="text" ng-model="searchText" class="form-control" placeholder=" - Search By Employee Name - " id="inputGroup">
+          <span class="input-group-addon" ng-click="clear()"> <i class="fa fa-search"> </i>  </span>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="table-responsive">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th> Employee ID </th>
+          <th> Employee Name </th>
+          <th> Pending Sections? </th>
+          <th> Status </th>
+          <th> Actions </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-ng-repeat="employeedetail in employeeAll | filter:searchText">
+          <td> {{employeedetail.id}} </td>
+          <td> {{employeedetail.name}} </td>
+          <td> 
+            <span ng-if="employeedetail.hr == 0">&nbsp;
+              <a href="#" ng-click="active(employeedetail , 'HR')"> HR </a> &nbsp;
+            </span> 
+            <span ng-if="employeedetail.documentation == 0"> &nbsp;
+              <a href="#" ng-click="active(employeedetail , 'Documentation')"> Documentation </a> &nbsp;
+            </span>
+            <span ng-if="employeedetail.rnbd == 0"> &nbsp;
+              <a href="#" ng-click="active(employeedetail , 'Rnbd')"> R&BD </a> &nbsp;
+            </span>
+            <span ng-if="employeedetail.network == 0"> &nbsp;
+              <a href="#" ng-click="active(employeedetail , 'Network') ">  Network </a> &nbsp;
+            </span>
+          </td>
+          <td> 
+           <span ng-if="employeedetail.hr == 0 || employeedetail.documentation == 0 || employeedetail.rnbd == 0 || employeedetail.network == 0">&nbsp; Pending &nbsp; </span> 
+           <span ng-if="employeedetail.hr == 1 && employeedetail.documentation == 1 && employeedetail.rnbd == 1 && employeedetail.network == 1">&nbsp; Complete &nbsp; </span>
+          </td>
+          <td> 
+          <button type="button" class="btn btn-primary btn-sm" ng-click="view(employeedetail)"> View </button> 
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </form>
+</div>
